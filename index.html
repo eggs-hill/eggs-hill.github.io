@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蛋蛋山丘 Eggs Hill | 新北三峽・白雞山上的迷你療癒農場</title>
+    <meta name="description" content="位於新北三峽白雞山登山步道旁，一座為孩子與自然打造的永續農場。認識世界上最可愛的蘆丁雞！">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --forest-dark: #2D5A3D;
+            --forest-mid: #4A7C59;
+            --forest-light: #7CB342;
+            --sky-top: #87CEEB;
+            --sky-bottom: #B8E0F0;
+            --warm-cream: #FFF8E7;
+            --egg-yellow: #FFD54F;
+            --egg-orange: #FFAB40;
+            --chick-brown: #6D4C41;
+            --soft-orange: #FF8A65;
+            --text-dark: #3E2723;
+            --text-light: #5D4037;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background: var(--warm-cream);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        /* ===== 導航列 ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        .nav.scrolled {
+            background: rgba(255, 248, 231, 0.95);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-logo {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--forest-dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-logo-icon {
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--egg-yellow);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+        }
+
+        /* ===== Hero 區塊 ===== */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(180deg, 
+                var(--sky-top) 0%, 
+                var(--sky-bottom) 30%,
+                var(--forest-light) 60%,
+                var(--forest-mid) 80%,
+                var(--forest-dark) 100%
+            );
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 100px 20px 60px;
+            overflow: hidden;
+        }
+
+        /* 雲朵 */
+        .clouds {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .cloud {
+            position: absolute;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            animation: float-cloud linear infinite;
+        }
+
+        .cloud::before, .cloud::after {
+            content: '';
+            position: absolute;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+        }
+
+        .cloud-1 { width: 100px; height: 40px; top: 8%; animation-duration: 35s; }
+        .cloud-1::before { width: 50px; height: 50px; top: -25px; left: 15px; }
+        .cloud-1::after { width: 60px; height: 60px; top: -35px; left: 45px; }
+
+        .cloud-2 { width: 80px; height: 32px; top: 15%; animation-duration: 45s; animation-delay: 10s; }
+        .cloud-2::before { width: 40px; height: 40px; top: -20px; left: 12px; }
+        .cloud-2::after { width: 50px; height: 50px; top: -28px; left: 38px; }
+
+        .cloud-3 { width: 120px; height: 48px; top: 5%; animation-duration: 55s; animation-delay: 20s; }
+        .cloud-3::before { width: 60px; height: 60px; top: -30px; left: 18px; }
+        .cloud-3::after { width: 70px; height: 70px; top: -40px; left: 55px; }
+
+        @keyframes float-cloud {
+            from { transform: translateX(-200px); }
+            to { transform: translateX(calc(100vw + 200px)); }
+        }
+
+        /* 山脈剪影 */
+        .mountains {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            pointer-events: none;
+        }
+
+        .mountain {
+            position: absolute;
+            bottom: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+
+        .mountain-1 {
+            left: -5%;
+            border-width: 0 200px 250px 200px;
+            border-color: transparent transparent rgba(45, 90, 61, 0.3) transparent;
+        }
+
+        .mountain-2 {
+            left: 20%;
+            border-width: 0 250px 300px 250px;
+            border-color: transparent transparent rgba(45, 90, 61, 0.4) transparent;
+        }
+
+        .mountain-3 {
+            right: 10%;
+            border-width: 0 300px 280px 300px;
+            border-color: transparent transparent rgba(45, 90, 61, 0.35) transparent;
+        }
+
+        /* Hero 內容 */
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.9);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--forest-dark);
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .hero-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 700;
+            color: white;
+            text-shadow: 3px 3px 0 var(--forest-dark), 5px 5px 20px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+            animation: float-title 3s ease-in-out infinite;
+        }
+
+        .hero-title-en {
+            font-family: 'Fredoka', sans-serif;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--egg-yellow);
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
+
+        @keyframes float-title {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: white;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--egg-yellow);
+            color: var(--text-dark);
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+        }
+
+        /* 小雞互動區 - 亂跑版 */
+        .chicken-playground {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 250px;
+            pointer-events: none;
+        }
+
+        .playground-chicken {
+            position: absolute;
+            width: 70px;
+            height: auto;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: transform 0.1s;
+            filter: drop-shadow(3px 5px 8px rgba(0,0,0,0.3));
+            z-index: 50;
+        }
+
+        .playground-chicken:hover {
+            transform: scale(1.2) !important;
+        }
+
+        .playground-chicken.jumping {
+            animation: chicken-jump 0.4s ease-out !important;
+        }
+
+        @keyframes chicken-jump {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-50px) scale(1.15) rotate(10deg); }
+            100% { transform: translateY(0) scale(1); }
+        }
+
+        /* 滾動提示 */
+        .scroll-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            text-align: center;
+            animation: bounce-down 2s ease-in-out infinite;
+            z-index: 60;
+        }
+
+        .scroll-hint-text {
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+            opacity: 0.8;
+        }
+
+        .scroll-hint-arrow {
+            font-size: 1.5rem;
+        }
+
+        @keyframes bounce-down {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* ===== 通用區塊樣式 ===== */
+        .section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            color: var(--forest-dark);
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ===== 關於區塊 ===== */
+        .about {
+            background: linear-gradient(180deg, var(--warm-cream) 0%, #FFF5E0 100%);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .about-card {
+            background: white;
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--egg-yellow), var(--egg-orange));
+        }
+
+        .about-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+        }
+
+        .about-card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .about-card-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.4rem;
+            color: var(--forest-dark);
+            margin-bottom: 12px;
+        }
+
+        .about-card-text {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.9;
+        }
+
+        /* ===== 認識蘆丁雞 ===== */
+        .learn {
+            background: var(--forest-dark);
+            color: white;
+            position: relative;
+        }
+
+        .learn .section-title {
+            color: white;
+        }
+
+        .learn .section-subtitle {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .learn-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        @media (max-width: 900px) {
+            .learn-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        .learn-image {
+            position: relative;
+            text-align: center;
+        }
+
+        .learn-chicken-main {
+            width: 100%;
+            max-width: 350px;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
+            animation: gentle-float 4s ease-in-out infinite;
+        }
+
+        @keyframes gentle-float {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+
+        .learn-facts {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .learn-fact {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            transition: background 0.3s;
+        }
+
+        .learn-fact:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .learn-fact-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .learn-fact-content h4 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--egg-yellow);
+        }
+
+        .learn-fact-content p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+
+        /* ===== 小雞圖鑑 ===== */
+        .gallery {
+            background: linear-gradient(180deg, #FFF5E0 0%, var(--warm-cream) 100%);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .gallery-item {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px) rotate(-2deg);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .gallery-item img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item-name {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            color: var(--forest-dark);
+            margin-bottom: 5px;
+        }
+
+        .gallery-item-desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        /* ===== 未來藍圖 ===== */
+        .future {
+            background: linear-gradient(135deg, var(--egg-yellow) 0%, var(--egg-orange) 100%);
+            text-align: center;
+        }
+
+        .future .section-title {
+            color: var(--text-dark);
+        }
+
+        .future .section-subtitle {
+            color: var(--text-dark);
+            opacity: 0.8;
+        }
+
+        .timeline {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .timeline-item {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            width: 280px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            transition: transform 0.3s;
+        }
+
+        .timeline-item:hover {
+            transform: scale(1.05);
+        }
+
+        .timeline-year {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--forest-dark);
+            margin-bottom: 10px;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--forest-mid);
+            margin-bottom: 10px;
+        }
+
+        .timeline-desc {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* ===== 趣味問答 ===== */
+        .quiz {
+            background: var(--warm-cream);
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 30px;
+            padding: 50px;
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+        }
+
+        .quiz-question {
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        @media (max-width: 500px) {
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .quiz-btn {
+            background: var(--warm-cream);
+            border: 3px solid transparent;
+            padding: 18px 25px;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-family: 'Noto Sans TC', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .quiz-btn:hover {
+            border-color: var(--egg-yellow);
+            background: #FFF8E0;
+        }
+
+        .quiz-btn.correct {
+            background: #C8E6C9;
+            border-color: #4CAF50;
+            color: #2E7D32;
+        }
+
+        .quiz-btn.wrong {
+            background: #FFCDD2;
+            border-color: #F44336;
+            color: #C62828;
+        }
+
+        .quiz-result {
+            text-align: center;
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: none;
+        }
+
+        .quiz-score {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+
+        /* ===== 聯絡區塊 ===== */
+        .contact {
+            background: var(--forest-dark);
+            color: white;
+            text-align: center;
+        }
+
+        .contact .section-title {
+            color: white;
+        }
+
+        .contact-text {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 500px;
+            margin: 0 auto 40px;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .contact-link:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+
+        .contact-link svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        /* ===== 頁尾 ===== */
+        .footer {
+            background: #1A3A25;
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .footer-logo {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .footer-text {
+            font-size: 0.85rem;
+        }
+
+        /* ===== 蛋蛋計數器 ===== */
+        .egg-counter {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 100;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .egg-counter:hover {
+            transform: scale(1.05);
+        }
+
+        .egg-counter-icon {
+            font-size: 1.5rem;
+        }
+
+        .egg-counter-text {
+            font-family: 'Fredoka', sans-serif;
+            color: var(--text-dark);
+        }
+
+        .egg-counter-num {
+            font-weight: 700;
+            color: var(--forest-dark);
+        }
+
+        /* 收集動畫 */
+        .collect-anim {
+            position: fixed;
+            pointer-events: none;
+            font-size: 2rem;
+            z-index: 9999;
+            animation: collect-float 1s ease-out forwards;
+        }
+
+        @keyframes collect-float {
+            0% { opacity: 1; transform: scale(1) translateY(0); }
+            100% { opacity: 0; transform: scale(1.5) translateY(-60px); }
+        }
+
+        /* 彩蛋小雞 - 全網站亂跑 */
+        .roaming-chicken {
+            position: fixed;
+            width: 60px;
+            height: auto;
+            cursor: pointer;
+            z-index: 999;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+            transition: transform 0.1s;
+            pointer-events: auto;
+        }
+
+        .roaming-chicken:hover {
+            transform: scale(1.3) !important;
+        }
+
+        .roaming-chicken.caught {
+            animation: caught-anim 0.5s ease-out forwards;
+        }
+
+        @keyframes caught-anim {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5) rotate(20deg); }
+            100% { transform: scale(0) rotate(360deg); opacity: 0; }
+        }
+
+        /* ===== RWD ===== */
+        @media (max-width: 768px) {
+            .section {
+                padding: 60px 20px;
+            }
+            
+            .nav {
+                padding: 12px 20px;
+            }
+            
+            .hero {
+                padding: 80px 20px 40px;
+            }
+            
+            .quiz-container {
+                padding: 30px 20px;
+            }
+            
+            .egg-counter {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 18px;
+            }
+
+            .roaming-chicken {
+                width: 45px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 導航列 -->
+    <nav class="nav" id="nav">
+        <a href="#" class="nav-logo">
+            <span class="nav-logo-icon">🐣</span>
+            蛋蛋山丘
+        </a>
+        <ul class="nav-links">
+            <li><a href="#about">關於山丘</a></li>
+            <li><a href="#learn">認識蘆丁雞</a></li>
+            <li><a href="#gallery">小雞圖鑑</a></li>
+            <li><a href="#future">未來藍圖</a></li>
+            <li><a href="#contact">聯絡我們</a></li>
+        </ul>
+    </nav>
+
+    <!-- 蛋蛋計數器 -->
+    <div class="egg-counter" id="egg-counter" title="點擊小雞收集蛋蛋！">
+        <span class="egg-counter-icon">🥚</span>
+        <span class="egg-counter-text">已收集 <span class="egg-counter-num" id="egg-count">0</span> 顆蛋</span>
+    </div>
+
+    <!-- Hero 區塊 -->
+    <section class="hero">
+        <!-- 雲朵 -->
+        <div class="clouds">
+            <div class="cloud cloud-1"></div>
+            <div class="cloud cloud-2"></div>
+            <div class="cloud cloud-3"></div>
+        </div>
+
+        <!-- 山脈 -->
+        <div class="mountains">
+            <div class="mountain mountain-1"></div>
+            <div class="mountain mountain-2"></div>
+            <div class="mountain mountain-3"></div>
+        </div>
+
+        <!-- 內容 -->
+        <div class="hero-content">
+            <div class="hero-badge">📍 新北三峽・白雞山登山步道旁</div>
+            <h1 class="hero-title">🐣 蛋蛋山丘</h1>
+            <div class="hero-title-en">Eggs Hill</div>
+            <p class="hero-subtitle">
+                一座為孩子與自然打造的永續農場<br>
+                認識全世界最可愛的蘆丁雞 🥚
+            </p>
+            <a href="#learn" class="hero-cta">
+                開始探索 <span>↓</span>
+            </a>
+        </div>
+
+        <!-- 小雞們 - Hero區 -->
+        <div class="chicken-playground" id="chicken-playground"></div>
+
+        <!-- 滾動提示 -->
+        <div class="scroll-hint">
+            <div class="scroll-hint-text">往下滑動探索更多</div>
+            <div class="scroll-hint-arrow">↓</div>
+        </div>
+    </section>
+
+    <!-- 關於區塊 -->
+    <section class="about section" id="about">
+        <div class="section-header">
+            <div class="section-icon">🏔️</div>
+            <h2 class="section-title">關於蛋蛋山丘</h2>
+            <p class="section-subtitle">在白雞山的懷抱中，我們正在孵化一個夢想</p>
+        </div>
+
+        <div class="about-grid">
+            <div class="about-card">
+                <div class="about-card-icon">🥚</div>
+                <h3 class="about-card-title">全世界最可愛的蘆丁雞</h3>
+                <p class="about-card-text">蘆丁雞是世界上最小的雞，體重只有 30-50 克。我們在這裡飼養著一群可愛的蘆丁雞，每天都在努力生蛋！</p>
+            </div>
+
+            <div class="about-card">
+                <div class="about-card-icon">🏕️</div>
+                <h3 class="about-card-title">能仰望星空的森林野宿</h3>
+                <p class="about-card-text">位於白雞山步道旁，被大自然環繞。未來這裡將成為能讓孩子們親近自然、仰望星空的療癒空間。</p>
+            </div>
+
+            <div class="about-card">
+                <div class="about-card-icon">🌱</div>
+                <h3 class="about-card-title">生態導覽與親子手作</h3>
+                <p class="about-card-text">我們相信最好的教育來自大自然。透過生態導覽和手作體驗，讓孩子們在玩樂中學習生命的奧妙。</p>
+            </div>
+
+            <div class="about-card">
+                <div class="about-card-icon">🌍</div>
+                <h3 class="about-card-title">永續農場的夢想</h3>
+                <p class="about-card-text">我們的目標是打造一座對環境友善的永續農場，讓人與自然和諧共處，一起孵出美好的未來。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 認識蘆丁雞 -->
+    <section class="learn section" id="learn">
+        <div class="section-header">
+            <div class="section-icon">🐤</div>
+            <h2 class="section-title">認識蘆丁雞</h2>
+            <p class="section-subtitle">世界上最小、最可愛的迷你雞</p>
+        </div>
+
+        <div class="learn-content">
+            <div class="learn-image">
+                <img src="assets/images/c1.png" alt="蘆丁雞" class="learn-chicken-main">
+            </div>
+
+            <div class="learn-facts">
+                <div class="learn-fact">
+                    <span class="learn-fact-icon">📏</span>
+                    <div class="learn-fact-content">
+                        <h4>超級迷你</h4>
+                        <p>成年蘆丁雞體重只有 30-50 克，身長 10-15 公分，大約跟一顆雞蛋差不多重，可以放在手掌心！</p>
+                    </div>
+                </div>
+
+                <div class="learn-fact">
+                    <span class="learn-fact-icon">🥚</span>
+                    <div class="learn-fact-content">
+                        <h4>生蛋高手</h4>
+                        <p>別看牠們小小隻，一年可以生超過 280 顆蛋！蛋只有 5 克重，是淺綠色或黃色的，上面還有可愛的小斑點。</p>
+                    </div>
+                </div>
+
+                <div class="learn-fact">
+                    <span class="learn-fact-icon">🦅</span>
+                    <div class="learn-fact-content">
+                        <h4>野性本能</h4>
+                        <p>蘆丁雞是藍胸鵪鶉和斑翅山鶉的混血，保留了野鳥天性。牠們很容易受驚嚇會飛起來，所以比較不親人喔！</p>
+                    </div>
+                </div>
+
+                <div class="learn-fact">
+                    <span class="learn-fact-icon">⏰</span>
+                    <div class="learn-fact-content">
+                        <h4>快速成長</h4>
+                        <p>從蛋孵化只要 14-16 天，4-5 週就能長成可以生蛋的成雞。壽命可以長達 3-13 年！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 小雞圖鑑 -->
+    <section class="gallery section" id="gallery">
+        <div class="section-header">
+            <div class="section-icon">📖</div>
+            <h2 class="section-title">小雞圖鑑</h2>
+            <p class="section-subtitle">點擊小雞收集蛋蛋！每隻都有不同的花色</p>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-item" data-chicken="gallery-1">
+                <img src="assets/images/c1.png" alt="奶茶色蘆丁雞">
+                <div class="gallery-item-name">奶茶</div>
+                <div class="gallery-item-desc">溫暖的奶茶棕色</div>
+            </div>
+
+            <div class="gallery-item" data-chicken="gallery-2">
+                <img src="assets/images/c2.png" alt="雪白蘆丁雞">
+                <div class="gallery-item-name">雪球</div>
+                <div class="gallery-item-desc">純淨的雪白色</div>
+            </div>
+
+            <div class="gallery-item" data-chicken="gallery-3">
+                <img src="assets/images/c3.png" alt="低頭蘆丁雞">
+                <div class="gallery-item-name">啄啄</div>
+                <div class="gallery-item-desc">總是在找東西吃</div>
+            </div>
+
+            <div class="gallery-item" data-chicken="gallery-4">
+                <img src="assets/images/c4.png" alt="巧克力蘆丁雞">
+                <div class="gallery-item-name">可可</div>
+                <div class="gallery-item-desc">濃郁的巧克力色</div>
+            </div>
+
+            <div class="gallery-item" data-chicken="gallery-5">
+                <img src="assets/images/c5.png" alt="銀灰蘆丁雞">
+                <div class="gallery-item-name">銀霜</div>
+                <div class="gallery-item-desc">優雅的銀灰色</div>
+            </div>
+
+            <div class="gallery-item" data-chicken="gallery-6">
+                <img src="assets/images/c6.png" alt="斑點蘆丁雞">
+                <div class="gallery-item-name">斑斑</div>
+                <div class="gallery-item-desc">可愛的棕白斑點</div>
+            </div>
+
+            <div class="gallery-item" data-chicken="gallery-7">
+                <img src="assets/images/c7.png" alt="藍灰蘆丁雞">
+                <div class="gallery-item-name">小藍</div>
+                <div class="gallery-item-desc">淡雅的藍灰羽毛</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 未來藍圖 -->
+    <section class="future section" id="future">
+        <div class="section-header">
+            <div class="section-icon">🗺️</div>
+            <h2 class="section-title">未來藍圖</h2>
+            <p class="section-subtitle">我們正在一步步實現夢想，邀請你一起見證</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-year">NOW</div>
+                <div class="timeline-title">夢想萌芽</div>
+                <div class="timeline-desc">蘆丁雞們正在茁壯成長，我們正在為未來的農場做準備。</div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">2026</div>
+                <div class="timeline-title">基地整備</div>
+                <div class="timeline-desc">完成農地規劃與基礎設施，讓蘆丁雞們有更好的家。</div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">2027</div>
+                <div class="timeline-title">正式開放</div>
+                <div class="timeline-desc">歡迎第一批山友來訪，開始生態導覽與親子體驗活動！</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 趣味問答 -->
+    <section class="quiz section" id="quiz">
+        <div class="section-header">
+            <div class="section-icon">🎯</div>
+            <h2 class="section-title">蘆丁雞小測驗</h2>
+            <p class="section-subtitle">測試一下你對蘆丁雞的了解！</p>
+        </div>
+
+        <div class="quiz-container">
+            <div class="quiz-question" id="quiz-question">
+                蘆丁雞一年大約可以生多少顆蛋？
+            </div>
+            <div class="quiz-options" id="quiz-options">
+                <button class="quiz-btn" data-answer="wrong">50 顆</button>
+                <button class="quiz-btn" data-answer="wrong">150 顆</button>
+                <button class="quiz-btn" data-answer="correct">280 顆以上</button>
+                <button class="quiz-btn" data-answer="wrong">500 顆</button>
+            </div>
+            <div class="quiz-result" id="quiz-result"></div>
+            <div class="quiz-score">目前分數：<span id="quiz-score">0</span> 分</div>
+        </div>
+    </section>
+
+    <!-- 聯絡區塊 -->
+    <section class="contact section" id="contact">
+        <div class="section-header">
+            <div class="section-icon">💌</div>
+            <h2 class="section-title">加入我們</h2>
+        </div>
+
+        <p class="contact-text">
+            邀請您成為我們的第一批山友，一起孵個夢想！<br>
+            追蹤我們的 Instagram 獲得最新消息 🐣
+        </p>
+
+        <div class="contact-links">
+            <a href="https://instagram.com/eggshill" class="contact-link" target="_blank">
+                <!-- Instagram SVG Logo -->
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                </svg>
+                @eggshill
+            </a>
+            <a href="mailto:eggshill.tw@gmail.com" class="contact-link">
+                <!-- Email SVG -->
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+                eggshill.tw@gmail.com
+            </a>
+        </div>
+    </section>
+
+    <!-- 頁尾 -->
+    <footer class="footer">
+        <div class="footer-logo">🐣 蛋蛋山丘 Eggs Hill</div>
+        <p class="footer-text">
+            📍 新北市三峽區・白雞山登山步道旁<br>
+            © 2024 Eggs Hill. 一起孵個夢想。
+        </p>
+    </footer>
+
+    <script>
+        // ===== 小雞圖片列表 =====
+        const chickenImages = [
+            'assets/images/c1.png',
+            'assets/images/c2.png',
+            'assets/images/c3.png',
+            'assets/images/c4.png',
+            'assets/images/c5.png',
+            'assets/images/c6.png',
+            'assets/images/c7.png'
+        ];
+
+        // ===== 導航列滾動效果 =====
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // ===== 蛋蛋計數器 =====
+        let eggCount = parseInt(localStorage.getItem('eggCount') || '0');
+        const eggCountEl = document.getElementById('egg-count');
+        eggCountEl.textContent = eggCount;
+
+        function collectEgg(x, y, amount = 1) {
+            eggCount += amount;
+            eggCountEl.textContent = eggCount;
+            localStorage.setItem('eggCount', eggCount);
+
+            // 動畫
+            const anim = document.createElement('div');
+            anim.className = 'collect-anim';
+            anim.textContent = `+${amount} 🥚`;
+            anim.style.left = x + 'px';
+            anim.style.top = y + 'px';
+            document.body.appendChild(anim);
+            setTimeout(() => anim.remove(), 1000);
+        }
+
+        // ===== Hero 區小雞 - 在草地上亂跑 =====
+        const playground = document.getElementById('chicken-playground');
+        const heroChickens = [];
+
+        function createHeroChicken(imgSrc, index) {
+            const chicken = document.createElement('img');
+            chicken.src = imgSrc;
+            chicken.className = 'playground-chicken';
+            chicken.alt = '蘆丁雞';
+            
+            const playgroundRect = playground.getBoundingClientRect();
+            const startX = Math.random() * (window.innerWidth - 100);
+            const startY = Math.random() * 150 + 50;
+            
+            chicken.style.left = startX + 'px';
+            chicken.style.bottom = startY + 'px';
+
+            const chickenData = {
+                el: chicken,
+                x: startX,
+                y: startY,
+                vx: (Math.random() - 0.5) * 3,
+                vy: (Math.random() - 0.5) * 1.5,
+                flipX: Math.random() > 0.5
+            };
+
+            if (chickenData.flipX) {
+                chicken.style.transform = 'scaleX(-1)';
+            }
+
+            chicken.addEventListener('click', (e) => {
+                e.stopPropagation();
+                collectEgg(e.clientX, e.clientY, 1);
+                chicken.classList.add('jumping');
+                setTimeout(() => chicken.classList.remove('jumping'), 400);
+            });
+
+            playground.appendChild(chicken);
+            heroChickens.push(chickenData);
+        }
+
+        // 建立 5 隻 Hero 區小雞
+        for (let i = 0; i < 5; i++) {
+            createHeroChicken(chickenImages[i % chickenImages.length], i);
+        }
+
+        // Hero 小雞動畫
+        function animateHeroChickens() {
+            const maxX = window.innerWidth - 80;
+            const maxY = 180;
+            const minY = 20;
+
+            heroChickens.forEach(chicken => {
+                chicken.x += chicken.vx;
+                chicken.y += chicken.vy;
+
+                // 邊界反彈
+                if (chicken.x < 10 || chicken.x > maxX) {
+                    chicken.vx *= -1;
+                    chicken.flipX = !chicken.flipX;
+                    chicken.el.style.transform = chicken.flipX ? 'scaleX(-1)' : 'scaleX(1)';
+                }
+                if (chicken.y < minY || chicken.y > maxY) {
+                    chicken.vy *= -1;
+                }
+
+                // 隨機改變方向
+                if (Math.random() < 0.01) {
+                    chicken.vx = (Math.random() - 0.5) * 3;
+                    chicken.vy = (Math.random() - 0.5) * 1.5;
+                    if ((chicken.vx > 0 && chicken.flipX) || (chicken.vx < 0 && !chicken.flipX)) {
+                        chicken.flipX = !chicken.flipX;
+                        chicken.el.style.transform = chicken.flipX ? 'scaleX(-1)' : 'scaleX(1)';
+                    }
+                }
+
+                chicken.x = Math.max(10, Math.min(maxX, chicken.x));
+                chicken.y = Math.max(minY, Math.min(maxY, chicken.y));
+
+                chicken.el.style.left = chicken.x + 'px';
+                chicken.el.style.bottom = chicken.y + 'px';
+            });
+
+            requestAnimationFrame(animateHeroChickens);
+        }
+
+        animateHeroChickens();
+
+        // ===== 彩蛋：全網站亂跑的小雞 =====
+        const roamingChickens = [];
+        let roamingEnabled = true;
+
+        function createRoamingChicken() {
+            if (!roamingEnabled || roamingChickens.length >= 3) return;
+
+            const chicken = document.createElement('img');
+            chicken.src = chickenImages[Math.floor(Math.random() * chickenImages.length)];
+            chicken.className = 'roaming-chicken';
+            chicken.alt = '彩蛋小雞';
+
+            // 從螢幕邊緣進入
+            const side = Math.floor(Math.random() * 4);
+            let startX, startY, vx, vy;
+
+            switch(side) {
+                case 0: // 上
+                    startX = Math.random() * window.innerWidth;
+                    startY = -60;
+                    vx = (Math.random() - 0.5) * 4;
+                    vy = Math.random() * 2 + 1;
+                    break;
+                case 1: // 右
+                    startX = window.innerWidth + 60;
+                    startY = Math.random() * window.innerHeight;
+                    vx = -(Math.random() * 2 + 1);
+                    vy = (Math.random() - 0.5) * 4;
+                    break;
+                case 2: // 下
+                    startX = Math.random() * window.innerWidth;
+                    startY = window.innerHeight + 60;
+                    vx = (Math.random() - 0.5) * 4;
+                    vy = -(Math.random() * 2 + 1);
+                    break;
+                case 3: // 左
+                    startX = -60;
+                    startY = Math.random() * window.innerHeight;
+                    vx = Math.random() * 2 + 1;
+                    vy = (Math.random() - 0.5) * 4;
+                    break;
+            }
+
+            chicken.style.left = startX + 'px';
+            chicken.style.top = startY + 'px';
+            if (vx < 0) chicken.style.transform = 'scaleX(-1)';
+
+            const chickenData = {
+                el: chicken,
+                x: startX,
+                y: startY,
+                vx: vx,
+                vy: vy,
+                caught: false
+            };
+
+            chicken.addEventListener('click', (e) => {
+                if (chickenData.caught) return;
+                chickenData.caught = true;
+                collectEgg(e.clientX, e.clientY, 5); // 彩蛋小雞值 5 蛋！
+                chicken.classList.add('caught');
+                setTimeout(() => {
+                    chicken.remove();
+                    const index = roamingChickens.indexOf(chickenData);
+                    if (index > -1) roamingChickens.splice(index, 1);
+                }, 500);
+            });
+
+            document.body.appendChild(chicken);
+            roamingChickens.push(chickenData);
+        }
+
+        function animateRoamingChickens() {
+            roamingChickens.forEach((chicken, index) => {
+                if (chicken.caught) return;
+
+                chicken.x += chicken.vx;
+                chicken.y += chicken.vy;
+
+                // 移出螢幕就移除
+                if (chicken.x < -100 || chicken.x > window.innerWidth + 100 ||
+                    chicken.y < -100 || chicken.y > window.innerHeight + 100) {
+                    chicken.el.remove();
+                    roamingChickens.splice(index, 1);
+                    return;
+                }
+
+                chicken.el.style.left = chicken.x + 'px';
+                chicken.el.style.top = chicken.y + 'px';
+            });
+
+            requestAnimationFrame(animateRoamingChickens);
+        }
+
+        // 隨機生成彩蛋小雞
+        setInterval(() => {
+            if (Math.random() < 0.3) { // 30% 機率
+                createRoamingChicken();
+            }
+        }, 5000);
+
+        animateRoamingChickens();
+
+        // ===== 圖鑑點擊事件 =====
+        document.querySelectorAll('.gallery-item').forEach(el => {
+            el.addEventListener('click', (e) => {
+                const rect = el.getBoundingClientRect();
+                collectEgg(rect.left + rect.width / 2, rect.top + 50);
+            });
+        });
+
+        // ===== 問答功能 =====
+        const quizData = [
+            {
+                question: '蘆丁雞一年大約可以生多少顆蛋？',
+                options: ['50 顆', '150 顆', '280 顆以上', '500 顆'],
+                correct: 2
+            },
+            {
+                question: '成年蘆丁雞大約多重？',
+                options: ['100-200 克', '30-50 克', '200-300 克', '10 克以下'],
+                correct: 1
+            },
+            {
+                question: '蘆丁雞的蛋需要幾天才能孵化？',
+                options: ['7 天', '14-16 天', '21 天', '30 天'],
+                correct: 1
+            },
+            {
+                question: '蘆丁雞適合的環境溫度是？',
+                options: ['15 度以上', '20 度以上', '25 度以上', '30 度以上'],
+                correct: 2
+            },
+            {
+                question: '蘆丁雞是由哪兩種鳥類混血而來？',
+                options: ['雞與鴨', '藍胸鵪鶉與斑翅山鶉', '麻雀與燕子', '鴿子與鵪鶉'],
+                correct: 1
+            }
+        ];
+
+        let currentQuiz = 0;
+        let quizScore = 0;
+        const quizQuestion = document.getElementById('quiz-question');
+        const quizOptions = document.getElementById('quiz-options');
+        const quizResult = document.getElementById('quiz-result');
+        const quizScoreEl = document.getElementById('quiz-score');
+
+        function loadQuiz() {
+            const quiz = quizData[currentQuiz];
+            quizQuestion.textContent = quiz.question;
+            quizOptions.innerHTML = '';
+            quizResult.style.display = 'none';
+
+            quiz.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-btn';
+                btn.textContent = option;
+                btn.dataset.answer = index === quiz.correct ? 'correct' : 'wrong';
+                btn.addEventListener('click', handleAnswer);
+                quizOptions.appendChild(btn);
+            });
+        }
+
+        function handleAnswer(e) {
+            const btn = e.target;
+            const isCorrect = btn.dataset.answer === 'correct';
+
+            document.querySelectorAll('.quiz-btn').forEach(b => {
+                b.disabled = true;
+                if (b.dataset.answer === 'correct') {
+                    b.classList.add('correct');
+                }
+            });
+
+            if (!isCorrect) {
+                btn.classList.add('wrong');
+            } else {
+                quizScore += 20;
+                quizScoreEl.textContent = quizScore;
+                collectEgg(window.innerWidth / 2, window.innerHeight / 2, 3);
+            }
+
+            quizResult.style.display = 'block';
+            quizResult.style.background = isCorrect ? '#C8E6C9' : '#FFCDD2';
+            quizResult.style.color = isCorrect ? '#2E7D32' : '#C62828';
+            quizResult.textContent = isCorrect ?
+                '🎉 答對了！你真是蘆丁雞小專家！' :
+                '😅 答錯了～沒關係，繼續加油！';
+
+            setTimeout(() => {
+                currentQuiz = (currentQuiz + 1) % quizData.length;
+                loadQuiz();
+            }, 2000);
+        }
+
+        // 初始化
+        loadQuiz();
+
+        // ===== 平滑滾動 =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ===== Console 彩蛋 =====
+        console.log('%c🐣 蛋蛋山丘 Eggs Hill', 'font-size: 24px; font-weight: bold; color: #4A7C59;');
+        console.log('%c找到這裡的你一定是工程師吧！', 'font-size: 14px; color: #6D4C41;');
+        console.log('%c偷偷告訴你：網站上有小雞彩蛋會到處亂跑，抓到一隻值 5 顆蛋喔！', 'font-size: 12px; color: #FF8A65;');
+    </script>
+</body>
+</html>
